@@ -1,0 +1,38 @@
+{
+    "name": "@nexcodepl/store",
+    "version": "2.0.3",
+    "description": "State management library",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "repository": "https://github.com/NexCodePL/store.git",
+    "author": "Alexander Stefański <alex@nexcode.pl>",
+    "license": "MIT",
+    "type": "module",
+    "keywords": [
+        "nexcodepl",
+        "endpoint",
+        "client"
+    ],
+    "private": false,
+    "scripts": {
+        "build": "yarn tsc",
+        "format": "yarn prettier --write \"src/**/*.ts\"",
+        "lint": "yarn eslint . --ext .ts",
+        "prepublishOnly": "yarn lint",
+        "preversion": "yarn lint",
+        "version": "yarn format && git add -A src",
+        "postversion": "git push && git push --tags"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.57.0",
+        "@typescript-eslint/parser": "^5.57.0",
+        "eslint": "^8.37.0",
+        "prettier": "^2.8.7",
+        "typescript": "^5.0.3"
+    },
+    "files": [
+        "dist/**/*"
+    ]
+}
