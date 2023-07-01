@@ -49,6 +49,9 @@ function isStoreSetStateFunction<T>(e: StoreSetState<T>): e is StoreSetStateFunc
     return typeof e === "function";
 }
 
-export function isStore<T = unknown>(e: Store<T> | unknown): e is Store<T> {
-    return e instanceof Store;
+export function isStoreReadonly<T = unknown>(e: StoreReadonly<T> | unknown): e is StoreReadonly<T> {
+    return (
+        e instanceof Store ||
+        (typeof e === "object" && !!(e as StoreReadonly<T>).current && !!(e as StoreReadonly<T>).subscribe)
+    );
 }

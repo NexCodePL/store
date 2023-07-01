@@ -1,6 +1,6 @@
 {
     "name": "@nexcodepl/store",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "State management library",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -23,8 +23,7 @@
         "version": "yarn format && git add -A src",
         "postversion": "git push && git push --tags"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.57.0",
         "@typescript-eslint/parser": "^5.57.0",

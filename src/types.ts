@@ -4,6 +4,11 @@ export type StoreSetState<T> = T | StoreSetStateFunction<T>;
 export type StoreStateShouldUpdate<T> = (prevState: T, nextState: T) => boolean;
 export type StoreSubscriberUnsubscribeFunction = () => void;
 
+export type StoreEffectDependencies = StoreReadonly<unknown>[];
+
+export type StoreEffectDestructor = () => void;
+export type StoreEffectFunction = () => void | StoreEffectDestructor;
+
 export interface StoreConfig<T> {
     shouldStateUpdate?: StoreStateShouldUpdate<T>;
     stateCopyFunction?: (state: T) => T;
