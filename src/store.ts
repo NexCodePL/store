@@ -1,9 +1,4 @@
-import { StoreReadonly, StoreSetState, StoreStateShouldUpdate, StoreSubscriber } from "./types.js";
-
-export interface StoreConfig<T> {
-    shouldStateUpdate?: StoreStateShouldUpdate<T>;
-    stateCopyFunction?: (state: T) => T;
-}
+import { StoreConfig, StoreReadonly, StoreSetState, StoreSetStateFunction, StoreSubscriber } from "./types.js";
 
 export class Store<T> implements StoreReadonly<T> {
     protected _state: T;
@@ -32,7 +27,7 @@ export class Store<T> implements StoreReadonly<T> {
         const newStateBase = this._config?.stateCopyFunction
             ? this._config.stateCopyFunction(this._state)
             : this._state;
-        const newState = isFunction(setState) ? setState(newStateBase) : setState;
+        const newState = isStoreSetStateFunction(setState) ? setState(newStateBase) : setState;
 
         if (!!this._config?.shouldStateUpdate && !this._config.shouldStateUpdate(this._state, newState)) {
             return;
@@ -50,7 +45,7 @@ export function getStoreReadonly<T>(store: Store<T>): StoreReadonly<T> {
     };
 }
 
-function isFunction(e: unknown): e is Function {
+function isStoreSetStateFunction<T>(e: StoreSetState<T>): e is StoreSetStateFunction<T> {
     return typeof e === "function";
 }
 

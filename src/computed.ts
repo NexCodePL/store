@@ -1,6 +1,6 @@
 import { StoreEffect, StoreEffectDependencies } from "./effect.js";
 import { Store } from "./store.js";
-import { StoreReadonly, StoreSubscriber, StoreSubscriberUnsubscribeFunction } from "./types.js";
+import { StoreConfig, StoreReadonly, StoreSubscriber } from "./types.js";
 
 export type StoreComputedValueGenerator<T> = () => T;
 
@@ -10,9 +10,10 @@ export class StoreComputed<T, TDependencyStores = unknown> implements StoreReado
 
     constructor(
         computedValueGenerator: StoreComputedValueGenerator<T>,
-        dependencies: StoreEffectDependencies<TDependencyStores>
+        dependencies: StoreEffectDependencies<TDependencyStores>,
+        storeConfig?: StoreConfig<T>
     ) {
-        this._store = new Store<T>(computedValueGenerator());
+        this._store = new Store<T>(computedValueGenerator(), storeConfig);
         this._effect = new StoreEffect<TDependencyStores>(
             () => this._store.set(computedValueGenerator()),
             dependencies
