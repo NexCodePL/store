@@ -40,8 +40,8 @@ export class Store<T> implements StoreReadonly<T> {
 
 export function getStoreReadonly<T>(store: Store<T>): StoreReadonly<T> {
     return {
-        current: store.current,
-        subscribe: store.subscribe,
+        current: () => store.current(),
+        subscribe: subscriber => store.subscribe(subscriber),
     };
 }
 
