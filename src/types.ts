@@ -1,10 +1,6 @@
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 
-export type ReadonlyObjectOrArray<T> = {
-    readonly [P in keyof T]: T[P];
-};
-
-export type ReadonlyExt<T> = unknown extends T ? Primitive | ReadonlyObjectOrArray<T> : ReadonlyObjectOrArray<T>;
+export type ReadonlyExt<T> = unknown extends T ? Primitive | Readonly<T> : Readonly<T>;
 
 export type StoreSubscriber<T> = (newState: ReadonlyExt<T>) => void;
 export type StoreSetStateFunction<T> = (prevValue: T) => T;
