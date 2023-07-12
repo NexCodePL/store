@@ -1,4 +1,12 @@
-export type StoreSubscriber<T> = (newState: Readonly<T>) => void;
+export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
+
+export type ReadonlyObjectOrArray<T> = {
+    readonly [P in keyof T]: T[P];
+};
+
+export type ReadonlyExt<T> = unknown extends T ? Primitive | ReadonlyObjectOrArray<T> : ReadonlyObjectOrArray<T>;
+
+export type StoreSubscriber<T> = (newState: ReadonlyExt<T>) => void;
 export type StoreSetStateFunction<T> = (prevValue: T) => T;
 export type StoreSetState<T> = T | StoreSetStateFunction<T>;
 export type StoreStateShouldUpdate<T> = (prevState: T, nextState: T) => boolean;
@@ -15,6 +23,6 @@ export interface StoreConfig<T> {
 }
 
 export interface StoreReadonly<T> {
-    current(): Readonly<T>;
+    current(): ReadonlyExt<T>;
     subscribe(subscriber: StoreSubscriber<T>): StoreSubscriberUnsubscribeFunction;
 }
