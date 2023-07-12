@@ -1,11 +1,4 @@
-import {
-    ReadonlyExt,
-    StoreConfig,
-    StoreReadonly,
-    StoreSetState,
-    StoreSetStateFunction,
-    StoreSubscriber,
-} from "./types.js";
+import { StoreConfig, StoreReadonly, StoreSetState, StoreSetStateFunction, StoreSubscriber } from "./types.js";
 
 export class Store<T> implements StoreReadonly<T> {
     protected _state: T;
@@ -18,7 +11,7 @@ export class Store<T> implements StoreReadonly<T> {
         this._subscribersSet = new Set<StoreSubscriber<T>>();
     }
 
-    current(): ReadonlyExt<T> {
+    current(): Readonly<T> {
         return this._state;
     }
 

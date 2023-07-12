@@ -1,6 +1,6 @@
 import { StoreEffect } from "./effect.js";
 import { Store } from "./store.js";
-import { ReadonlyExt, StoreConfig, StoreEffectDependencies, StoreReadonly, StoreSubscriber } from "./types.js";
+import { StoreConfig, StoreEffectDependencies, StoreReadonly, StoreSubscriber } from "./types.js";
 
 export type StoreComputedValueGenerator<T> = () => T;
 
@@ -17,7 +17,7 @@ export class StoreComputed<T> implements StoreReadonly<T> {
         this._effect = new StoreEffect(() => this._store.set(computedValueGenerator()), dependencies);
     }
 
-    current(): ReadonlyExt<T> {
+    current(): Readonly<T> {
         return this._store.current();
     }
 
