@@ -1,6 +1,6 @@
 {
     "name": "@nexcodepl/store",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "State management library",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -15,7 +15,7 @@
     ],
     "private": false,
     "scripts": {
-        "build": "yarn tsc",
+        "build": "yarn tsc --build --force",
         "format": "yarn prettier --write \"src/**/*.ts\"",
         "lint": "yarn eslint . --ext .ts",
         "prepublishOnly": "yarn lint",

@@ -8,7 +8,7 @@ export type StoreSetState<T> = T | StoreSetStateFunction<T>;
 export type StoreStateShouldUpdate<T> = (prevState: T, nextState: T) => boolean;
 export type StoreSubscriberUnsubscribeFunction = () => void;
 
-export type StoreEffectDependencies = StoreReadonly<unknown>[];
+export type StoreEffectDependencies = StoreReadonlyExt<unknown>[];
 
 export type StoreEffectDestructor = () => void;
 export type StoreEffectFunction = () => void | StoreEffectDestructor;
@@ -18,7 +18,12 @@ export interface StoreConfig<T> {
     stateCopyFunction?: (state: T) => T;
 }
 
-export interface StoreReadonly<T> {
+export interface StoreReadonlyExt<T> {
     current(): ReadonlyExt<T>;
+    subscribe(subscriber: StoreSubscriber<T>): StoreSubscriberUnsubscribeFunction;
+}
+
+export interface StoreReadonly<T> {
+    current(): Readonly<T>;
     subscribe(subscriber: StoreSubscriber<T>): StoreSubscriberUnsubscribeFunction;
 }
