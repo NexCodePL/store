@@ -31,8 +31,10 @@ export class Store<T> implements StoreReadonly<T> {
         const newState = isStoreSetStateFunction(setState) ? setState(newStateBase) : setState;
 
         if (this._config?.shouldStateUpdate !== null) {
-            if (!!this._config?.shouldStateUpdate && !this._config.shouldStateUpdate(this._state, newState)) {
-                return;
+            if (this._config?.shouldStateUpdate) {
+                if (!this._config.shouldStateUpdate(this._state, newState)) {
+                    return;
+                }
             } else if (!compare(this._state, newState, 2)) {
                 return;
             }
