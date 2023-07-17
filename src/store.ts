@@ -1,3 +1,4 @@
+import { compare } from "./compare.js";
 import { StoreConfig, StoreReadonly, StoreSetState, StoreSetStateFunction, StoreSubscriber } from "./types.js";
 
 export class Store<T> implements StoreReadonly<T> {
@@ -29,8 +30,12 @@ export class Store<T> implements StoreReadonly<T> {
             : this._state;
         const newState = isStoreSetStateFunction(setState) ? setState(newStateBase) : setState;
 
-        if (!!this._config?.shouldStateUpdate && !this._config.shouldStateUpdate(this._state, newState)) {
-            return;
+        if (this._config?.shouldStateUpdate !== null) {
+            if (!!this._config?.shouldStateUpdate && !this._config.shouldStateUpdate(this._state, newState)) {
+                return;
+            } else if (!compare(this._state, newState, 2)) {
+                return;
+            }
         }
 
         this._state = newState;

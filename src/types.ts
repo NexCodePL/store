@@ -14,7 +14,7 @@ export type StoreEffectDestructor = () => void;
 export type StoreEffectFunction = () => void | StoreEffectDestructor;
 
 export interface StoreConfig<T> {
-    shouldStateUpdate?: StoreStateShouldUpdate<T>;
+    shouldStateUpdate?: StoreStateShouldUpdate<T> | null;
     stateCopyFunction?: (state: T) => T;
 }
 
