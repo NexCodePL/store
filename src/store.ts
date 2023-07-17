@@ -35,7 +35,7 @@ export class Store<T> implements StoreReadonly<T> {
                 if (!this._config.shouldStateUpdate(this._state, newState)) {
                     return;
                 }
-            } else if (!compare(this._state, newState, 2)) {
+            } else if (compare(this._state, newState, 2)) {
                 return;
             }
         }
