@@ -1,4 +1,11 @@
 export function compare(a: unknown, b: unknown, compareDepth?: number): boolean {
+    if (a === null && b !== null) return false;
+    if (a !== null && b === null) return false;
+    if (a === null && b === null) return true;
+    if (a === undefined && b !== undefined) return false;
+    if (a !== undefined && b === undefined) return false;
+    if (a === undefined && b === undefined) return true;
+
     if (typeof a !== typeof b) return false;
 
     const t = typeof a;
