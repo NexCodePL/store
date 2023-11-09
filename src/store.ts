@@ -19,6 +19,8 @@ export class Store<T> implements StoreReadonly<T> {
     subscribe(subscriber: StoreSubscriber<T>): () => void {
         this._subscribersSet.add(subscriber);
 
+        subscriber(this._state);
+
         return () => {
             this._subscribersSet.delete(subscriber);
         };
