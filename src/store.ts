@@ -26,7 +26,10 @@ export class Store<T> implements StoreReadonly<T> {
         };
     }
 
-    set(setState: StoreSetState<T>) {
+    set(setState: StoreSetState<T>): void;
+    set(setState: StoreSetState<T>, returnValue: "always"): T;
+    set(setState: StoreSetState<T>, returnValue: "updated"): T | undefined;
+    set(setState: StoreSetState<T>, returnValue?: "always" | "updated"): void | T | undefined {
         const newStateBase = this._config?.stateCopyFunction
             ? this._config.stateCopyFunction(this._state)
             : this._state;
@@ -35,15 +38,19 @@ export class Store<T> implements StoreReadonly<T> {
         if (this._config?.shouldStateUpdate !== null) {
             if (this._config?.shouldStateUpdate) {
                 if (!this._config.shouldStateUpdate(this._state, newState)) {
+                    if (returnValue === "always") return this._state;
                     return;
                 }
             } else if (compare(this._state, newState, 2)) {
+                if (returnValue === "always") return this._state;
                 return;
             }
         }
 
         this._state = newState;
         this._subscribersSet.forEach(s => s(this._state));
+
+        if (returnValue) return this._state;
     }
 }
 
