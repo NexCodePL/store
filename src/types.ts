@@ -27,3 +27,7 @@ export interface StoreReadonly<T> {
     current(): Readonly<T>;
     subscribe(subscriber: StoreSubscriber<T>): StoreSubscriberUnsubscribeFunction;
 }
+
+export type StoreInitStateFunction<T> = () => T;
+
+export type StoreInitState<T> = T | StoreInitStateFunction<T>;

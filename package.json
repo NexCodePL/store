@@ -1,6 +1,6 @@
 {
     "name": "@nexcodepl/store",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "description": "State management library",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",

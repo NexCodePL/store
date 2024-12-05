@@ -1,13 +1,21 @@
 import { compare } from "./compare.js";
-import { StoreConfig, StoreReadonly, StoreSetState, StoreSetStateFunction, StoreSubscriber } from "./types.js";
+import {
+    StoreConfig,
+    StoreInitState,
+    StoreInitStateFunction,
+    StoreReadonly,
+    StoreSetState,
+    StoreSetStateFunction,
+    StoreSubscriber,
+} from "./types.js";
 
 export class Store<T> implements StoreReadonly<T> {
     protected _state: T;
     protected _config?: StoreConfig<T>;
     protected _subscribersSet: Set<StoreSubscriber<T>>;
 
-    constructor(initState: T, config?: StoreConfig<T>) {
-        this._state = initState;
+    constructor(initState: StoreInitState<T>, config?: StoreConfig<T>) {
+        this._state = isInitStateFunction(initState) ? initState() : initState;
         this._config = config;
         this._subscribersSet = new Set<StoreSubscriber<T>>();
     }
@@ -70,4 +78,8 @@ export function isStoreReadonly<T = unknown>(e: StoreReadonly<T> | unknown): e i
         e instanceof Store ||
         (typeof e === "object" && !!(e as StoreReadonly<T>).current && !!(e as StoreReadonly<T>).subscribe)
     );
+}
+
+function isInitStateFunction<T>(initState: StoreInitState<T>): initState is StoreInitStateFunction<T> {
+    return typeof initState === "function";
 }
